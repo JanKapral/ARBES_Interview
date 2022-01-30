@@ -24,4 +24,5 @@
 hs_err_pid*
 =======
 .idea/
+.target/
 >>>>>>> 47a5f50 (implementation)
