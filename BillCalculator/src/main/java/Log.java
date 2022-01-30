@@ -26,12 +26,6 @@ public class Log implements Comparable<Log> {
         end = LocalDateTime.parse(tmpInput[2], DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
     }
 
-    //Only for tests
-    public Log(String number, LocalDateTime start, LocalDateTime end) {
-        this.number = number;
-        this.start = start;
-        this.end = end;
-    }
 
     public String getNumber() {
         return number;
@@ -42,16 +36,20 @@ public class Log implements Comparable<Log> {
         return -this.number.compareTo(o.getNumber());
     }
 
+    //Calculates price for all calls, implies business rules in assignment
     public BigDecimal getPrice() {
         var sum = new BigDecimal("0");
         sum = sum.add(getFirstFiveMinutesPrice());
-        if (!start.plusMinutes(5).isBefore(end)) {
+
+        if (!start.plusMinutes(5).isBefore(end)) { //if call was shorter than 5 minutes, returns result
             return sum;
         }
-        sum = sum.add(getRestTimePrice());
+        sum = sum.add(getRestTimePrice()); // For calls longer than 5 minutes calculate rest
         return sum.setScale(2, RoundingMode.HALF_UP);
     }
 
+
+    //Calculates rest of the call, uses price stored in constants
     private BigDecimal getRestTimePrice() {
         Duration duration = Duration.between(start.plusMinutes(5), end);
         long minutes = duration.toMinutes();
@@ -60,6 +58,7 @@ public class Log implements Comparable<Log> {
         return BigDecimal.valueOf(restPrice);
     }
 
+    //Calculates first five minutes
     private BigDecimal getFirstFiveMinutesPrice() {
         double sum = 0;
         LocalTime startTime = start.toLocalTime();
@@ -68,8 +67,9 @@ public class Log implements Comparable<Log> {
         for (int i = 0; i < 5; i++) {
             var timeToCompare = startTime.plusMinutes(i);
             if (timeToCompare.isAfter(endTime))
-                break;
+                break; // Call ended before 5:00 minutes
 
+            //Use different rate if minute started in Main interval or outside main interval
             if ((timeToCompare.isBefore(START_OF_MAIN_INTERVAL) || timeToCompare.isAfter(END_OF_MAIN_INTERVAL))) {
                 sum += RATE_OUTSIDE_MAIN_INTERVAL;
             } else {

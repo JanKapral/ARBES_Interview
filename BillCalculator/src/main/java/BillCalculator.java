@@ -13,6 +13,7 @@ public class BillCalculator implements TelephoneBillCalculator{
         return calculatePrice(logs);
     }
 
+    //Finds most common number in List and returns it as a string
     private String findMostCommonNumber(List<Log> logs) {
         String tmpMostCommon = logs.get(0).getNumber();
         int tmpRate = 0;
