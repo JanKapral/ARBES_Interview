@@ -36,4 +36,22 @@
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>App</mainClass>
+                    <arguments>
+                        <argument>argument1</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>

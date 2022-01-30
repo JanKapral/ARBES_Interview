@@ -55,7 +55,6 @@ public class BillCalculatorTest {
         BigDecimal result = billCalculator.calculate("420776562353,18-01-2020 08:59:20,18-01-2020 09:10:00" + System.lineSeparator() +
                 "222222222222,13-01-2020 18:10:15,13-01-2020 18:12:57" + System.lineSeparator() +
                 "222222222222,18-01-2020 08:59:20,18-01-2020 09:10:00");
-        System.out.println(LocalTime.of(8,59,20).until(LocalTime.of(9,10,0), ChronoUnit.SECONDS));
         Assert.assertEquals(new BigDecimal("6.20"), result);
     }
 

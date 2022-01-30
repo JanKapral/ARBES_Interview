@@ -50,7 +50,6 @@ public class BillCalculator implements TelephoneBillCalculator{
         for (Log log : logs) {
             if (!log.getNumber().equals(mostCommonNumber)){
                 sum = sum.add(log.getPrice());
-                System.out.println(log.getPrice());
             }
         }
         return sum;
